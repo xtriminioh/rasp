@@ -1,0 +1,28 @@
+version: "2.4"
+services:
+        gonic:
+                image: ugeek/gonic:arm-0.10.0
+                container_name: gonic
+                environment:
+                        - TZ=America/Tegucigalpa
+                expose:
+                        - 80
+                ports:
+                        - "80:80"
+                volumes:
+                        - /home/pi/gonic/data:/data
+                        - /home/pi/gonic/cache:/cache
+                        - /mnt/storage/Musica:/music:ro
+                
+                networks:
+                        lan:
+                                ipv4_address: 192.168.0.10
+networks:
+        lan:
+                driver: macvlan
+                driver_opts:
+                        parent: eth0
+                ipam:
+                        config:
+                                - subnet: "192.168.0.0/24"
+                                  gateway: "192.168.0.1"
