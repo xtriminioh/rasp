@@ -13,10 +13,28 @@ services:
                         - /home/pi/gonic/data:/data
                         - /home/pi/gonic/cache:/cache
                         - /mnt/storage/Musica:/music:ro
-                
                 networks:
                         lan:
                                 ipv4_address: 192.168.0.10
+                                
+        postgres:
+                image: postgres:9.5-alpine
+                container_name: postgres
+                expose:
+                        - 5432
+                ports:
+                        - "5432:5432"
+                environment:
+                        TZ: "America/Tegucigalpa"
+                        POSTGRES_PASSWORD: "xtr.123"
+                        POSTGRES_USER: "xtriminio"
+                        PGDATA: "/var/lib/postgresql/data/pgdata"
+                volumes:
+                        - /home/pi/postgres/data:/var/lib/postgresql/data
+                networks:
+                        lan:
+                                ipv4_address: 192.168.0.9
+
 networks:
         lan:
                 driver: macvlan
